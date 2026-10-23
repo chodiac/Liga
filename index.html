@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#0a0e2a">
+<meta name="description" content="BRAINROT: Server je pao — 2D avantura u pretrčanom internet đubrištu. Sajt je igra.">
+<title>BRAINROT: Server je pao</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d1c'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23b6ff3c' stroke='%235865f2' stroke-width='3'/%3E%3Ccircle cx='13' cy='14' r='2' fill='%230a0d1c'/%3E%3Ccircle cx='19' cy='14' r='2' fill='%230a0d1c'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+<div id="app">
+  <div id="stagewrap">
+    <canvas id="stage" aria-label="Igra: 2D svet servera" role="img"></canvas>
+    <div id="fx" aria-hidden="true"></div>
+
+    <header id="hud" hidden>
+      <div id="objective" class="chip" aria-live="polite">
+        <span class="lbl">CILJ</span><span id="obj-text"></span>
+      </div>
+      <div id="hud-right">
+        <div id="inv" class="chip" aria-label="Inventar"></div>
+        <div id="progress" class="chip" title="Glavne misije"><span id="prog-text">0/6</span><span class="bar"><i id="prog-bar"></i></span></div>
+        <button id="b-map" class="hbtn" type="button" aria-label="Mapa servera">MAPA</button>
+        <button id="b-audio" class="hbtn" type="button" aria-label="Zvuk uključen" aria-pressed="true">ZVUK</button>
+        <button id="b-pause" class="hbtn" type="button" aria-label="Pauza i podešavanja">II</button>
+      </div>
+    </header>
+
+    <div id="bosshud" hidden>
+      <div class="hearts" id="b-hearts"></div>
+      <div class="bossbar"><span>MOTIVACIJA TRAVE</span><i><b id="b-motiv"></b></i></div>
+    </div>
+
+    <div id="hint" hidden></div>
+    <div id="toasts" aria-live="polite"></div>
+  </div>
+
+  <div id="lower">
+    <section id="dialogue" class="win dlg" hidden aria-live="polite">
+      <div class="dlg-portrait"><img id="dlg-img" alt=""><span id="dlg-name" class="dlg-name"></span></div>
+      <div class="dlg-body">
+        <div id="dlg-text" class="dlg-text"></div>
+        <div id="dlg-choices" class="dlg-choices"></div>
+        <div id="dlg-next" class="dlg-next">▶ dalje (E / klik)</div>
+      </div>
+    </section>
+
+    <div id="touch" aria-label="Kontrole na dodir">
+      <div class="tpad">
+        <button id="t-left" type="button" aria-label="Levo">◀</button>
+        <button id="t-right" type="button" aria-label="Desno">▶</button>
+      </div>
+      <div class="tpad tpad-r">
+        <button id="t-act" type="button" aria-label="Akcija" class="act">E</button>
+        <button id="t-jump" type="button" aria-label="Skok" class="jump">SKOK</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modals"></div>
+  <div id="intro"></div>
+  <noscript><p style="padding:2rem;color:#fff">Ovaj sajt je igra i treba JavaScript. Nažalost.</p></noscript>
+</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
