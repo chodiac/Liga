@@ -200,6 +200,7 @@ export const PROPS = {
     for (let i = 0; i < 5; i++) box(ctx, -108 + i * 2, -76 - i * 4, 52, 8, 1, COL.white, 2.5);
     ctx.save(); ctx.translate(90, -68); curve(ctx, [0, 0, 0, -30, 18, -44, 30, -40], 5, COL.grey, 2.5); poly(ctx, [24, -48, 46, -40, 34, -28], COL.yellow, 3); ctx.restore();
     box(ctx, 30, -78, 36, 10, 2, COL.red, 3);
+    box(ctx, -86, -96, 12, 28, 3, '#6b3d1e', 3); box(ctx, -83, -108, 6, 14, 2, '#6b3d1e', 3); box(ctx, -86, -86, 12, 10, 1, COL.yellow, 2);
   },
 
   bell(ctx, o, t) {
@@ -361,11 +362,13 @@ export const PROPS = {
     ctx.save(); ctx.translate(0, -170); ctx.rotate(t * 1.2); ctx.beginPath(); ctx.moveTo(-18, 0); ctx.lineTo(18, 0); ctx.moveTo(0, -18); ctx.lineTo(0, 18); ctx.strokeStyle = INK; ctx.lineWidth = 4; ctx.stroke(); ctx.restore();
   },
 
-  bench(ctx, o) {
+  bench(ctx, o, t) {
+    if (o.scope) ctx.translate(0, 28);
     box(ctx, -80, -66, 160, 16, 4, '#7a6450', 4.5);
     box(ctx, -70, -50, 14, 50, 3, '#5b4a3a', 4); box(ctx, 56, -50, 14, 50, 3, '#5b4a3a', 4);
     limb(ctx, -40, -76, -20, -76, 6, COL.grey); box(ctx, 20, -90, 30, 24, 4, COL.red, 3);
     box(ctx, -60, -84, 24, 18, 3, COL.grey2, 3);
+    if (o.scope) { box(ctx, 24, -112, 44, 36, 5, COL.char2, 3.5); box(ctx, 29, -107, 34, 22, 3, '#031a12', 2.5); ctx.beginPath(); for (let i = 0; i <= 12; i++) { const yy = -96 + Math.sin(i * 1.1 + t * 6) * 6; i ? ctx.lineTo(30 + i * 2.5, yy) : ctx.moveTo(30, yy); } ctx.strokeStyle = COL.green; ctx.lineWidth = 2; ctx.stroke(); ell(ctx, 40, -80, 2.5, 2.5, COL.red, 1.5); ell(ctx, 52, -80, 2.5, 2.5, COL.yellow, 1.5); }
   },
 
   // ---------------------------------------------------------------- MUZEJ

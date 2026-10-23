@@ -48,7 +48,7 @@ function npc(id, x, face, extra = {}) {
         else hop = Math.sin(((u - 0.35) / 0.65) * Math.PI) * 18;
       }
       ctx.globalAlpha = 0.35; ctx.fillStyle = '#000'; ctx.beginPath(); ctx.ellipse(0, 2, 28 - hop * 0.3, 7, 0, 0, 6.3); ctx.fill(); ctx.globalAlpha = 1;
-      drawChar(ctx, look, 0, -hop, { face: fc, t, scale: 0.95, mood: o.mood ? o.mood() : talkMood(o), sx, sy, seed: o.seed, hold: extra.hold, lean: d < 300 ? 0.04 * fc : 0 });
+      drawChar(ctx, look, 0, -hop, { face: fc, t, scale: 0.95, mood: o.mood ? o.mood() : talkMood(o), sx, sy, seed: o.seed, hold: extra.hold, lean: (d < 300 ? 0.04 * fc : 0) + (extra.sway ? Math.sin(t * 1.7) * 0.06 : 0) });
     },
     ...extra,
   };
@@ -152,7 +152,8 @@ add({ type: 'ticket', x: 2000, act: { label: 'Broj na redu', range: 60, run: Q.t
 crate(2060, 70, 80, 'ARHIVA');
 ledge(2150, GY - 140, 100);
 wanderBot(1500, 1700, 'Žigošem vazduh', COL.yellow, 30, 2);
-const pero = npc('pero', 2340, -1, { act: { label: 'Razgovaraj: pero nikic samo', range: 130, run: Q.talkPero }, promptY: 200, hold: 'stamp' });
+const pero = npc('pero', 2340, -1, { act: { label: 'Razgovaraj: pero nikic samo', range: 130, run: Q.talkPero }, y: GY - 26, promptY: 230, sway: true, mood: () => (ui.has('dialogue') ? 'talk' : 'crazy') });
+add({ x: 2340, z: -0.1, draw(ctx) { box(ctx, -60, -26, 120, 26, 4, '#4a3a2c', 4); } });
 add({ type: 'desk', x: 2340, z: 1, act: { label: 'Gomila papira', range: 70, show: () => false, run: Q.deskAct } });
 const bell = add({ type: 'bell', x: 2230, y: GY - 68, z: 1.1, rung: 0, act: { label: 'Zvonce', range: 54, run: (o) => Q.bellAct(o) }, hitW: 30, hitH: 40, promptY: 70,
   update(dt) { bell.rung = Math.max(0, bell.rung - dt); } });
@@ -175,8 +176,8 @@ add({ type: 'pillar', x: 3746, z: -0.9, cull: 60 });
 add({ type: 'cableMess', x: 3900, z: -0.3 });
 add({ type: 'weather', x: 4040, act: { label: 'Tabla', range: 70, run: Q.weatherAct }, promptY: 200, hitW: 90, hitH: 180 });
 wanderBot(3820, 3990, 'Poliram latenciju', COL.green, 28, 3);
-npc('vasilije', 4330, -1, { act: { label: 'Razgovaraj: Vasilije', range: 130, run: Q.talkVasilije }, promptY: 210, hold: 'wrench' });
-add({ type: 'bench', x: 4330, z: 1 });
+npc('vasilije', 4330, -1, { act: { label: 'Razgovaraj: Vasilije', range: 130, run: Q.talkVasilije }, promptY: 210, mood: () => (ui.has('dialogue') ? 'talk' : flag('ping') ? 'cheer' : 'think') });
+add({ type: 'bench', x: 4330, z: 1, scope: true });
 add({ type: 'pingMonitor', x: 4570, z: -0.3 });
 add({ type: 'socketPanel', x: 4740, act: { label: () => (flag('ping') ? 'Panel' : 'Panel za ping'), range: 90, run: Q.panelAct }, promptY: 175, hitW: 80, hitH: 160 });
 crate(4900, 60, 70);
@@ -234,7 +235,7 @@ add({ type: 'deadTree', x: 8940, s: 0.9, z: -0.4 });
     draw(ctx, o, t) {
       PROPS.niche(ctx, o, t);
       ctx.save(); ctx.beginPath(); ctx.rect(-56, -226, 112, 190); ctx.clip();
-      drawChar(ctx, c.look, 0, -42, { face: 1, t, scale: 0.92, mood: id === 'chdc' ? 'sleepy' : id === 'vasilije' ? 'cheer' : 'smug', seed: x % 9, arms: undefined });
+      drawChar(ctx, c.look, 0, -42, { face: 1, t, scale: 0.92, mood: id === 'chdc' ? 'sleepy' : id === 'vasilije' ? 'think' : 'crazy', seed: x % 9, arms: undefined });
       ctx.restore();
     } });
 });
